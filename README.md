@@ -102,7 +102,7 @@ Linux：
 ffmpeg -f alsa -i default -c:a aac -f rtp rtp://192.168.50.151:12345 -sdp_file output.sdp
 ```
 
-接收：
+### 接收：
 
 保证上述发送端所保存的output.sdp也在接收端当前目录下
 
