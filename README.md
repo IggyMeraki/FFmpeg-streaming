@@ -184,12 +184,31 @@ a=rtpmap:97 MPEG4-GENERIC/48000/2
 
 
 
-# send video
-ffmpeg -f v4l2 -i /dev/video2 -c:v libx264 -preset veryfast -tune zerolatency -f rtp rtp://127.0.0.1:8888 -sdp_file video.sdp
-# rev video
-gst-launch-1.0 -v udpsrc port=8888 caps="application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)H264" ! rtph264depay ! avdec_h264 ! videoconvert ! autovideosink
 
-# send wav
+
+
+
+## send video
+
+```bash
+ffmpeg -f v4l2 -i /dev/video2 -c:v libx264 -preset veryfast -tune zerolatency -f rtp rtp://127.0.0.1:8888 -sdp_file video.sdp
+```
+
+## rev video
+
+```bash
+gst-launch-1.0 -v udpsrc port=8888 caps="application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)H264" ! rtph264depay ! avdec_h264 ! videoconvert ! autovideosink
+```
+
+## send wav
+
+```bash
 ffmpeg -f alsa -i default -c:a aac -f rtp rtp://192.168.50.151:12345 -sdp_file output.sdp
-# rev wav
+```
+
+## rev wav
+
+```bash
 ffplay -protocol_whitelist "file,udp,rtp" -i output.sdp
+```
+
